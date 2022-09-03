@@ -5,7 +5,7 @@
 
 #define GET_REGISTER_INDEX(reg) ((reg) / 3)
 
-static inline
+FORCE_INLINE
 Word get_register(CPU* cpu, Register reg)
 {       
     int index = GET_REGISTER_INDEX(reg);
@@ -39,7 +39,7 @@ Word get_register(CPU* cpu, Register reg)
     return result;
 }
 
-static inline
+FORCE_INLINE
 void set_register(CPU* cpu, Register reg, Word value)
 {
     int index = GET_REGISTER_INDEX(reg);

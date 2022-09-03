@@ -2,7 +2,7 @@
 
 set CC=gcc
 set LINKER=lld-link
-set CFLAGS=-I../include -O2 -std=c99 -pedantic -Wall -Wextra
+set CFLAGS=-I../include -O2 -std=c99 -pedantic -Wall -Wextra -Wno-deprecated-declarations
 set LFLAGS=-subsystem:console
 set SRC=%1
 
