@@ -32,7 +32,7 @@ Instruction* load_program(const char* path)
     
     // turn file into array of bytes
     uint8_t* byte_array = malloc(file_size);
-    for (int i = 0; i < file_size; i++)
+    for (size_t i = 0; i < file_size; i++)
     {
         byte_array[i] = fgetc(file);
     }    
