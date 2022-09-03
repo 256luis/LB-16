@@ -102,7 +102,8 @@ void execute_instruction(CPU* cpu, Instruction inst)
         } break;
 
         case MOVR: {
-            set_register(cpu, inst.operand_1.u, get_register(cpu, inst.operand_2.u));
+            Word new_value = get_register(cpu, inst.operand_2.u);
+            set_register(cpu, inst.operand_1.u, new_value);
         } break;
 
         case HLT: {
