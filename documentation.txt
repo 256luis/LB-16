@@ -1,0 +1,106 @@
+DOCUMENTATION FOR THE LB-8
+
+REGISTERS:
+    AX, BX, CX, DX: General Purpose
+    R: Return Value
+    IP: Instruction Pointer
+    SP: Stack Pointer
+
+    All registers are 16-bits wide.
+
+OPCODES:
+    movl    -   01
+    movr    -   02
+    addl    -   03
+    addr    -   04
+    subl    -   05
+    subr    -   06
+    mull    -   07
+    mulr    -   08   
+    divl    -   09
+    divr    -   0a
+    cmpl    -   0b
+    cmpr    -   0c
+    jmp     -   0d
+    jz      -   0e
+    jnz     -   0f
+    jl      -   10
+    jle     -   11
+    jg      -   12
+    jge     -   13
+    call    -   14
+    ret     -   15
+    pushl   -   16
+    pushr   -   17
+    popr    -   18
+    hlt     -   19
+
+INSTRUCTIONS:
+    movl A, B
+        - moves literal value B into register A
+    movr A, B
+        - moves value in register B into register A
+    addl A, B
+        - adds literal value B into register A then stores the result into
+          register A and register R
+    addr A, B
+        - adds value in register B into register A then stores the result
+          into register A and register R
+    subl A, B
+        - subtracts literal value B from register A then stores the result
+          into register A and register R
+    subr A, B
+        - subtracts value in register B from register A then stores the
+          result into register A and register R
+    mull A, B
+        - multiplies literal value B into register A then stores the result into
+          register A and register R
+    mulr A, B
+        - multiplies value in register B into register A then stores the result
+          into register A and register R
+    divl A, B
+        - divides literal value B into register A then stores the result
+          into register A and register R
+    divr A, B
+        - divides value in register B into register A then stores the
+          result into register A and register R
+    cmpr A, B
+        - subtracts value in register B from register A then stores the
+          result into register R
+    cmpl A, B
+        - subtracts literal value B from register A then stores the
+          result into register R
+    jmp A
+        - sets instruction pointer to address A unconditionally
+    jz A
+        - sets instruction pointer to address A if value in register R is 0
+    jnz A
+        - sets instruction pointer to address A if value in register R is not
+          0
+    jl A
+        - sets instruction pointer to address A if value in register R is
+          less than 0
+    jle A
+        - sets instruction pointer to address A if value in register R is
+          less than or equal to 0          
+    jg A
+        - sets instruction pointer to address A if value in register R is
+          greater than 0
+    jge A
+        - sets instruction pointer to address A if value in register R is
+          greater than or equal to 0
+    call A
+        - jumps to address of procedure A
+    ret
+        - jumps to address of the last executed call instruction
+    pushl A
+        - pushes literal value A to the stack
+    pushr A
+        - pushes value in register A to the stack
+    popr A
+        - pops value at the top of the stack and stores it in register A
+    hlt
+        - terminates the program
+
+    All instructions are 3 bytes (1 byte for opcode, 2 bytes for both
+    operands, even if there are none).
