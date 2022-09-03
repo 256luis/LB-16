@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "cpu.h"
+#include "helper.h"
 
 #define GET_REGISTER_INDEX(reg) ((reg) / 3)
 
-FORCE_INLINE
+static FORCE_INLINE
 Word get_register(CPU* cpu, Register reg)
 {       
     int index = GET_REGISTER_INDEX(reg);
@@ -39,7 +40,7 @@ Word get_register(CPU* cpu, Register reg)
     return result;
 }
 
-FORCE_INLINE
+static FORCE_INLINE
 void set_register(CPU* cpu, Register reg, Word value)
 {
     int index = GET_REGISTER_INDEX(reg);
