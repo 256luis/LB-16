@@ -1,4 +1,4 @@
-DOCUMENTATION FOR THE LB-8
+DOCUMENTATION FOR THE LB-16
 
 REGISTERS:
     AX, BX, CX, DX: General Purpose
@@ -9,32 +9,32 @@ REGISTERS:
     All registers are 16-bits wide.
 
 OPCODES:
-    movl    -   01
-    movr    -   02
-    addl    -   03
-    addr    -   04
-    subl    -   05
-    subr    -   06
-    mull    -   07
-    mulr    -   08   
-    divl    -   09
-    divr    -   0a
-    cmpl    -   0b
-    cmpr    -   0c
-    jmp     -   0d
-    jz      -   0e
-    jnz     -   0f
-    jl      -   10
-    jle     -   11
-    jg      -   12
-    jge     -   13
-    call    -   14
-    ret     -   15
-    pushl   -   16
-    pushr   -   17
-    popr    -   18
-    hlt     -   19
-
+    movl    -   0000
+    movr    -   0001
+    addl    -   0002
+    addr    -   0003
+    subl    -   0004
+    subr    -   0005
+    mull    -   0006
+    mulr    -   0007   
+    divl    -   0008
+    divr    -   0009
+    cmpl    -   000a
+    cmpr    -   000b
+    jmp     -   000c
+    jz      -   000d
+    jnz     -   000e
+    jl      -   001f
+    jle     -   0010
+    jg      -   0011
+    jge     -   0012
+    call    -   0013
+    ret     -   0014
+    pushl   -   0015
+    pushr   -   0016
+    popr    -   0017
+    hlt     -   0018
+                   
 INSTRUCTIONS:
     movl A, B
         - moves literal value B into register A
@@ -102,5 +102,5 @@ INSTRUCTIONS:
     hlt
         - terminates the program
 
-    All instructions are 3 bytes (1 byte for opcode, 2 bytes for both
-    operands, even if there are none).
+    All instructions are 5 bytes (1 byte for opcode, 2 bytes for each
+    operand, even if there are none).

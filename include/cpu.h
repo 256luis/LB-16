@@ -7,11 +7,14 @@
 
 #define MEMORY_STACK_SIZE 32 // arbitrary
 #define CALL_STACK_SIZE 32 // arbitrary
+#define REG_COUNT 4
 
 typedef enum Register
 {
-    REG_A, REG_B, REG_C, REG_D,    
-    REG_COUNT
+    REG_AX, REG_AH, REG_AL,
+    REG_BX, REG_BH, REG_BL,
+    REG_CX, REG_CH, REG_CL,
+    REG_DX, REG_DH, REG_DL,
 } Register;
 
 typedef struct CPU
