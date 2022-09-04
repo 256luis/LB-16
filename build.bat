@@ -13,6 +13,6 @@ if not defined SRC (
 pushd build
 
 call %CC% ../src/%SRC%.c -c %CFLAGS%
-call %CC% *.o -o ../vm.exe
+call %CC% *.o -o ../lb.exe
 
 popd
