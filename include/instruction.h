@@ -29,7 +29,6 @@ typedef struct Instruction
     Word operand_2;
 } Instruction;
 
-// todo FIX THIS SHIT
 Instruction decode_instruction(uint8_t opcode, uint16_t operand_1, uint16_t operand_2);
 Instruction* load_program(const char* path);
 

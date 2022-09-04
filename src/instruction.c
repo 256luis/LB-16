@@ -16,7 +16,6 @@ Instruction decode_instruction(uint8_t opcode, uint16_t operand_1, uint16_t oper
     return inst;
 }
 
-// todo: this
 Instruction* load_program(const char* path)
 {
     FILE* file = fopen(path, "r");
@@ -27,11 +26,13 @@ Instruction* load_program(const char* path)
     size_t file_size = ftell(file);
     fseek(file, 0, SEEK_SET);
 
-    // todo: verify that the file size is valid
+    // verify that the file size is valid
     INSIST(file_size % INSTRUCTION_SIZE == 0, "invalid file\n");
     
     // turn file into array of bytes
     uint8_t* byte_array = malloc(file_size);
+    INSIST(byte_array != NULL, "malloc failed\n");
+    
     for (size_t i = 0; i < file_size; i++)
     {
         byte_array[i] = fgetc(file);
@@ -41,6 +42,8 @@ Instruction* load_program(const char* path)
     // turn array of bytes into array of instruction
     int instruction_count = file_size / INSTRUCTION_SIZE;
     Instruction* program = malloc(instruction_count * sizeof(Instruction));
+    INSIST(program != NULL, "malloc failed\n");
+    
     for (int i = 0, j = 0; i < instruction_count; i++, j += INSTRUCTION_SIZE)
     {
         Word op1 = {
