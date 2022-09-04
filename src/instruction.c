@@ -51,11 +51,7 @@ Instruction* load_program(const char* path)
             .bytes[0].u = byte_array[j + 3],
             .bytes[1].u = byte_array[j + 4]
         };        
-        program[i] = (Instruction){
-            .opcode = byte_array[j],
-            .operand_1 = op1,
-            .operand_2 = op2
-        };
+        program[i] = decode_instruction(byte_array[j], op1.u, op2.u);
     }
     
     free(byte_array);
