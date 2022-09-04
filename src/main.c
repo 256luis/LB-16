@@ -12,14 +12,15 @@ typedef struct RawInstruction
     uint16_t operand_2;
 } RawInstruction;
 
-void print_bytes(RawInstruction* arr, size_t size)
+void write_bytes(RawInstruction* arr, size_t size)
 {
+    FILE* file = fopen("sample.bin", "w");
     for (int i = 0; i < size; i++)
     {        
         Word op1 = { .u = arr[i].operand_1 };
         Word op2 = { .u = arr[i].operand_2 };
-    
-        printf("%02x %02x %02x %02x %02x ",
+
+        fprintf(file, "%c%c%c%c%c",
                arr[i].opcode,
                op1.bytes[0].u,
                op1.bytes[1].u,
@@ -27,7 +28,7 @@ void print_bytes(RawInstruction* arr, size_t size)
                op2.bytes[1].u
         );
     }
-    putchar('\n');
+    fclose(file);
 }
 
 int main(int argc, char** argv)
@@ -37,9 +38,14 @@ int main(int argc, char** argv)
         {MOVL, REG_BL, 0x4f},
         {MOVL, REG_BH, 0xa3},
         {MOVL, REG_CX, 0x49eb},
+        {MOVR, REG_CX, REG_AX},
+        {ADDR, REG_AX, REG_AH},
+        {PUSHL, 0x25ef, 0},
+        {PUSHR, REG_AH, 0},
+        {POPR, REG_DX, 0},
         {HLT, 0, 0}
     };
-    print_bytes(prog, 5);
+    write_bytes(prog, sizeof(prog) / sizeof(RawInstruction));
     INSIST(argc > 1, "no file specified\n");
 
     // sdl stuff

@@ -61,6 +61,7 @@ void set_register(CPU* cpu, Register reg, Word value)
 
         default: {
             fprintf(stderr, "invalid register\n");
+            exit(1);
         } break;            
     }
 }
@@ -73,7 +74,7 @@ CPU* cpu_init()
 
 void cpu_dump(CPU* cpu)
 {
-    printf("ax = %02x %02x\nbx = %02x %02x\ncx = %02x %02x\ndx = %02x %02x\n\nrx = %04x\nip = %04x\nsp = %04x\nstack = ",
+    printf("ax = %02x %02x\nbx = %02x %02x\ncx = %02x %02x\ndx = %02x %02x\n\n r = %04x\nip = %04x\nsp = %04x\n\nstack = ",
            get_register(cpu, REG_AH).u,
            get_register(cpu, REG_AL).u,
            get_register(cpu, REG_BH).u,
@@ -87,11 +88,11 @@ void cpu_dump(CPU* cpu)
            cpu->reg_sp
     );
     
-    /* for (int i = 0; i < MEMORY_STACK_SIZE - 1; i++) */
-    /* { */
-    /*     printf("%04x\n        ", cpu->memory_stack[i].u); */
-    /* } */
-    /* printf("%04x\n", cpu->memory_stack[MEMORY_STACK_SIZE - 1].u); */
+    for (int i = 0; i < MEMORY_STACK_SIZE - 1; i++)
+    {
+        printf("%04x\n        ", cpu->memory_stack[i].u);
+    }
+    printf("%04x\n", cpu->memory_stack[MEMORY_STACK_SIZE - 1].u);
 }
 
 void execute_instruction(CPU* cpu, Instruction inst)
@@ -107,6 +108,139 @@ void execute_instruction(CPU* cpu, Instruction inst)
             set_register(cpu, inst.operand_1.u, new_value);
         } break;
 
+        case ADDL: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s + inst.operand_2.s
+            };
+            set_register(cpu, inst.operand_1.u, result);
+            cpu->reg_r = result;
+        } break;
+
+        case ADDR: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s + get_register(cpu, inst.operand_2.u).s
+            };
+            set_register(cpu, inst.operand_1.u, result);
+            cpu->reg_r = result;
+        } break;
+
+        case SUBL: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s - inst.operand_2.s
+            };
+            set_register(cpu, inst.operand_1.u, result);
+            cpu->reg_r = result;
+        } break;
+
+        case SUBR: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s - get_register(cpu, inst.operand_2.u).s
+            };
+            set_register(cpu, inst.operand_1.u, result);
+            cpu->reg_r = result;
+        } break;
+
+        case MULL: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s * inst.operand_2.s
+            };
+            set_register(cpu, inst.operand_1.u, result);
+            cpu->reg_r = result;
+        } break;
+
+        case MULR: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s * get_register(cpu, inst.operand_2.u).s
+            };
+            set_register(cpu, inst.operand_1.u, result);
+            cpu->reg_r = result;
+        } break;
+
+        case DIVL: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s / inst.operand_2.s
+            };
+            set_register(cpu, inst.operand_1.u, result);
+            cpu->reg_r = result;
+        } break;
+
+        case DIVR: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s / get_register(cpu, inst.operand_2.u).s
+            };
+            set_register(cpu, inst.operand_1.u, result);
+            cpu->reg_r = result;
+        } break;
+
+        case CMPL: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s - inst.operand_2.s
+            };
+            cpu->reg_r = result;
+        } break;
+
+        case CMPR: {
+            Word result = {
+                .s = get_register(cpu, inst.operand_1.u).s - get_register(cpu, inst.operand_2.u).s
+            };
+            cpu->reg_r = result;
+        } break;
+
+        case JMP: {
+            cpu->reg_ip = inst.operand_1.u;
+        } break;
+
+        case JZ: {
+            if (cpu->reg_r.s == 0) cpu->reg_ip = inst.operand_1.u;
+        } break;
+
+        case JNZ: {
+            if (cpu->reg_r.s != 0) cpu->reg_ip = inst.operand_1.u;
+        } break;
+                        
+        case JL: {
+            if (cpu->reg_r.s < 0) cpu->reg_ip = inst.operand_1.u;
+        } break;
+
+        case JLE: {
+            if (cpu->reg_r.s <= 0) cpu->reg_ip = inst.operand_1.u;
+        } break;
+
+        case JG: {
+            if (cpu->reg_r.s > 0) cpu->reg_ip = inst.operand_1.u;
+        } break;
+
+        case JGE: {
+            if (cpu->reg_r.s >= 0) cpu->reg_ip = inst.operand_1.u;
+        } break;
+
+        case CALL: {
+            cpu->reg_rsp++;
+            cpu->return_stack[cpu->reg_rsp] = cpu->reg_ip;
+            cpu->reg_ip = inst.operand_1.u;            
+        } break;
+
+        case RET: {
+            cpu->reg_ip = cpu->return_stack[cpu->reg_rsp];
+            cpu->reg_rsp--;
+        } break;
+
+        case PUSHL: {
+            cpu->reg_sp++;
+            cpu->memory_stack[cpu->reg_sp] = inst.operand_1;
+        } break;
+
+        case PUSHR: {
+            cpu->reg_sp++;
+            cpu->memory_stack[cpu->reg_sp] = get_register(cpu, inst.operand_1.u);
+        } break;
+
+        case POPR: {
+            Word memory_stack_top = cpu->memory_stack[cpu->reg_sp];
+            set_register(cpu, inst.operand_1.u, memory_stack_top);
+            cpu->reg_sp--;
+        } break;
+        
         case HLT: {
             cpu->should_halt = true;
             puts("program has successfully terminated.");

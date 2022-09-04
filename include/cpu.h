@@ -6,7 +6,7 @@
 #include "instruction.h"
 
 #define MEMORY_STACK_SIZE 32 // arbitrary
-#define CALL_STACK_SIZE 32 // arbitrary
+#define RETURN_STACK_SIZE 32 // arbitrary
 #define REG_COUNT 4
 
 typedef enum Register
@@ -20,12 +20,14 @@ typedef enum Register
 typedef struct CPU
 {
     Word registers[REG_COUNT];
+    Word reg_r;
     uint16_t reg_ip;
     uint16_t reg_sp;
-    Word reg_r;
+    uint16_t reg_rsp;
     
     Word memory_stack[MEMORY_STACK_SIZE];
-    uint16_t call_stack[CALL_STACK_SIZE];
+    uint16_t return_stack[RETURN_STACK_SIZE];
+
     bool should_halt;
 } CPU;
 
