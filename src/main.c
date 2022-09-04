@@ -15,7 +15,7 @@ typedef struct RawInstruction
 void write_bytes(RawInstruction* arr, size_t size)
 {
     FILE* file = fopen("sample.bin", "w");
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {        
         Word op1 = { .u = arr[i].operand_1 };
         Word op2 = { .u = arr[i].operand_2 };
