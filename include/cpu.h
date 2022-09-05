@@ -2,6 +2,7 @@
 #define CPU_H
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "general.h"
 #include "instruction.h"
 

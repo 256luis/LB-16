@@ -12,9 +12,18 @@ typedef struct RawInstruction
     uint16_t operand_2;
 } RawInstruction;
 
+// this is also temporary
 void write_bytes(RawInstruction* arr, size_t size)
 {
     FILE* file = fopen("sample.bin", "wb");
+
+    // write magic number
+    uint8_t magic_number[] = {0xd0, 0xd0, 0xfa, 0xce, 0x16};
+    for (int i = 0; i < MAGIC_NUMBER_LENGTH; i++)
+    {
+        fputc(magic_number[i], file);
+    }
+    
     for (size_t i = 0; i < size; i++)
     {        
         Word op1 = { .u = arr[i].operand_1 };
@@ -33,7 +42,7 @@ void write_bytes(RawInstruction* arr, size_t size)
 
 int main(int argc, char** argv)
 {
-    RawInstruction prog[] = {
+    RawInstruction prog[] = {        
         {OUTL, 'H', 0},
         {OUTL, 'e', 0},
         {OUTL, 'l', 0},

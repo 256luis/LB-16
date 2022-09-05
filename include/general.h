@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+// temporarily here. should be in instruction.c only
+#define MAGIC_NUMBER_LENGTH 5
+
 typedef union Byte
 {
     int8_t s;

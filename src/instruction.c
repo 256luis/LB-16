@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "instruction.h"
+#include <string.h>
+#include "vm.h"
 #include "helper.h"
 
 #define INSTRUCTION_SIZE 5
@@ -25,10 +26,10 @@ Instruction* load_program(const char* path)
     fseek(file, 0, SEEK_END);
     size_t file_size = ftell(file);
     fseek(file, 0, SEEK_SET);
-
-    // verify that the file size is valid
-    INSIST(file_size % INSTRUCTION_SIZE == 0, "invalid file\n");
     
+    // verify that the file size is valid
+    INSIST((file_size - MAGIC_NUMBER_LENGTH) % INSTRUCTION_SIZE == 0, "invalid file\n");
+
     // turn file into array of bytes
     uint8_t* byte_array = malloc(file_size);
     INSIST(byte_array != NULL, "malloc failed\n");
@@ -38,13 +39,20 @@ Instruction* load_program(const char* path)
         byte_array[i] = fgetc(file);
     }    
     fclose(file);
-
+    
+    // verify that the file starts with the magic number (D0D0FACE16)
+    uint8_t magic_number[] = {0xd0, 0xd0, 0xfa, 0xce, 0x16};
+    for (int i = 0; i < MAGIC_NUMBER_LENGTH; i++)
+    {
+        INSIST(magic_number[i] == byte_array[i], "no magic number :(\n");
+    }
+    
     // turn array of bytes into array of instruction
-    int instruction_count = file_size / INSTRUCTION_SIZE;
+    int instruction_count = (file_size - MAGIC_NUMBER_LENGTH) / INSTRUCTION_SIZE;
     Instruction* program = malloc(instruction_count * sizeof(Instruction));
     INSIST(program != NULL, "malloc failed\n");
     
-    for (int i = 0, j = 0; i < instruction_count; i++, j += INSTRUCTION_SIZE)
+    for (int i = 0, j = MAGIC_NUMBER_LENGTH; i < instruction_count; i++, j += INSTRUCTION_SIZE)
     {
         Word op1 = {
             .bytes[0].u = byte_array[j + 1],
