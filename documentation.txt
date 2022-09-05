@@ -9,31 +9,33 @@ REGISTERS:
     All registers are 16-bits wide.
 
 OPCODES:
-    movl    -   0000
-    movr    -   0001
-    addl    -   0002
-    addr    -   0003
-    subl    -   0004
-    subr    -   0005
-    mull    -   0006
-    mulr    -   0007   
-    divl    -   0008
-    divr    -   0009
-    cmpl    -   000a
-    cmpr    -   000b
-    jmp     -   000c
-    jz      -   000d
-    jnz     -   000e
-    jl      -   001f
-    jle     -   0010
-    jg      -   0011
-    jge     -   0012
-    call    -   0013
-    ret     -   0014
-    pushl   -   0015
-    pushr   -   0016
-    popr    -   0017
-    hlt     -   0018
+    movl    -   00
+    movr    -   01
+    addl    -   02
+    addr    -   03
+    subl    -   04
+    subr    -   05
+    mull    -   06
+    mulr    -   07   
+    divl    -   08
+    divr    -   09
+    cmpl    -   0a
+    cmpr    -   0b
+    jmp     -   0c
+    jz      -   0d
+    jnz     -   0e
+    jl      -   1f
+    jle     -   10
+    jg      -   11
+    jge     -   12
+    call    -   13
+    ret     -   14
+    pushl   -   15
+    pushr   -   16
+    popr    -   17
+    outl    -   18
+    outl    -   19
+    hlt     -   1a
                    
 INSTRUCTIONS:
     movl A, B

@@ -14,7 +14,7 @@ typedef struct RawInstruction
 
 void write_bytes(RawInstruction* arr, size_t size)
 {
-    FILE* file = fopen("sample.bin", "w");
+    FILE* file = fopen("sample.bin", "wb");
     for (size_t i = 0; i < size; i++)
     {        
         Word op1 = { .u = arr[i].operand_1 };
@@ -34,15 +34,20 @@ void write_bytes(RawInstruction* arr, size_t size)
 int main(int argc, char** argv)
 {
     RawInstruction prog[] = {
-        {MOVL, REG_AH, 0x5e},
-        {MOVL, REG_BL, 0x4f},
-        {MOVL, REG_BH, 0xa3},
-        {MOVL, REG_CX, 0x49eb},
-        {MOVR, REG_CX, REG_AX},
-        {ADDR, REG_AX, REG_AH},
-        {PUSHL, 0x25ef, 0},
-        {PUSHR, REG_AH, 0},
-        {POPR, REG_DX, 0},
+        {OUTL, 'H', 0},
+        {OUTL, 'e', 0},
+        {OUTL, 'l', 0},
+        {OUTL, 'l', 0},
+        {OUTL, 'o', 0},
+        {OUTL, ',', 0},
+        {OUTL, ' ', 0},
+        {OUTL, 'W', 0},
+        {OUTL, 'o', 0},
+        {OUTL, 'r', 0},
+        {OUTL, 'l', 0},
+        {OUTL, 'd', 0},
+        {OUTL, '!', 0},
+        {OUTL, '\n', 0},
         {HLT, 0, 0}
     };
     write_bytes(prog, sizeof(prog) / sizeof(RawInstruction));
@@ -58,7 +63,7 @@ int main(int argc, char** argv)
         execute_instruction(cpu, program[cpu->reg_ip]);     
     }
     
-    cpu_dump(cpu);
+    // cpu_dump(cpu);
     
     // cleanup
     free(cpu);

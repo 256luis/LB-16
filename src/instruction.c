@@ -18,7 +18,7 @@ Instruction decode_instruction(uint8_t opcode, uint16_t operand_1, uint16_t oper
 
 Instruction* load_program(const char* path)
 {
-    FILE* file = fopen(path, "r");
+    FILE* file = fopen(path, "rb");
     INSIST(file != NULL, "file does not exist\n");    
 
     // get size of file

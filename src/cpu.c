@@ -240,10 +240,18 @@ void execute_instruction(CPU* cpu, Instruction inst)
             set_register(cpu, inst.operand_1.u, memory_stack_top);
             cpu->reg_sp--;
         } break;
-        
+
+        case OUTL: {
+            putchar(inst.operand_1.u);
+        } break;
+
+        case OUTR: {
+            char c = get_register(cpu, inst.operand_1.u).u;
+            putchar(c);            
+        } break;
+            
         case HLT: {
             cpu->should_halt = true;
-            puts("program has successfully terminated.");
         } break;
             
         default: {

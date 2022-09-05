@@ -19,6 +19,7 @@ typedef enum Opcode
     CALL, RET,
     PUSHL, PUSHR,
     POPR,
+    OUTL, OUTR,
     HLT
 } Opcode;
 
