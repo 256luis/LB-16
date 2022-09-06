@@ -13,8 +13,7 @@ Word get_register(CPU* cpu, Register reg)
     Word result;
     switch (reg)
     {     
-        case REG_AX: case REG_BX: case REG_CX: case REG_DX:
-        {
+        case REG_AX: case REG_BX: case REG_CX: case REG_DX: {
             result = cpu->registers[index];
         } break;
             
