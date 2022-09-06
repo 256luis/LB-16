@@ -1,3 +1,5 @@
+#define HELPER_IMPLEMENTATION
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -59,7 +61,7 @@ int main(int argc, char** argv)
         {OUTL, '\n', 0},
         {HLT, 0, 0}
     };
-    write_bytes(prog, sizeof(prog) / sizeof(RawInstruction));
+//    write_bytes(prog, sizeof(prog) / sizeof(RawInstruction));
     INSIST(argc > 1, "no file specified\n");
 
     // sdl stuff
@@ -72,7 +74,7 @@ int main(int argc, char** argv)
         execute_instruction(cpu, program[cpu->reg_ip]);     
     }
     
-    // cpu_dump(cpu);
+    cpu_dump(cpu);
     
     // cleanup
     free(cpu);

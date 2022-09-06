@@ -20,25 +20,16 @@ Instruction decode_instruction(uint8_t opcode, uint16_t operand_1, uint16_t oper
 Instruction* load_program(const char* path)
 {
     FILE* file = fopen(path, "rb");
-    INSIST(file != NULL, "file does not exist\n");    
+    INSIST(file != NULL, "file does not exist\n");
 
-    // get size of file
-    fseek(file, 0, SEEK_END);
-    size_t file_size = ftell(file);
-    fseek(file, 0, SEEK_SET);
-    
     // verify that the file size is valid
+    size_t file_size = get_file_size(file);   
     INSIST((file_size - MAGIC_NUMBER_LENGTH) % INSTRUCTION_SIZE == 0, "invalid file\n");
 
     // turn file into array of bytes
-    uint8_t* byte_array = malloc(file_size);
-    INSIST(byte_array != NULL, "malloc failed\n");
-    
-    for (size_t i = 0; i < file_size; i++)
-    {
-        byte_array[i] = fgetc(file);
-    }    
+    uint8_t* byte_array = file_to_array(file, file_size);
     fclose(file);
+    INSIST(byte_array != NULL, "malloc failed\n");
     
     // verify that the file starts with the magic number (D0D0FACE16)
     uint8_t magic_number[] = {0xd0, 0xd0, 0xfa, 0xce, 0x16};
