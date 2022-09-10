@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "vm.h"
+#include "vm/vm.h"
 #include "helper.h"
 
 #define INSTRUCTION_SIZE 5

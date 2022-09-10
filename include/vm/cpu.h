@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "general.h"
-#include "instruction.h"
+#include "vm/general.h"
+#include "vm/instruction.h"
 
 #define MEMORY_STACK_SIZE 32 // arbitrary
 #define RETURN_STACK_SIZE 32 // arbitrary

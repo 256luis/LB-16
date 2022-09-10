@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "vm.h"
+#include "vm/vm.h"
 #include "helper.h"
 
 // temporary until we have an assembler

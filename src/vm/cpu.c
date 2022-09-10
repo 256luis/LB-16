@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "cpu.h"
+#include "vm/cpu.h"
 #include "helper.h"
 
 #define GET_REGISTER_INDEX(reg) ((reg) / 3)
