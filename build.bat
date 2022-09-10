@@ -8,7 +8,13 @@ set APP=%1
 set SRC=%2
 
 if not defined SRC (
-   set SRC=*
+    set SRC=*
+)
+
+if not defined APP (
+    call build.bat vm
+    call build.bat asm
+    exit /b 0
 )
 
 pushd build\%APP%
