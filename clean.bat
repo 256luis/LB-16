@@ -1,6 +1,7 @@
 @echo off
 
 echo cleaning...
-if exist *.exe del /q *.exe
-if exist build\*.o* del /q build\*.o*
+del /s /q *.exe
+del /s /q *.o*
+del /s /q *.s
 echo done!
