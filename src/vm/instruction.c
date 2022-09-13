@@ -27,7 +27,7 @@ Instruction* load_program(const char* path)
     INSIST((file_size - MAGIC_NUMBER_LENGTH) % INSTRUCTION_SIZE == 0, "invalid file\n");
 
     // turn file into array of bytes
-    uint8_t* byte_array = file_to_array(file, file_size);
+    uint8_t* byte_array = file_to_array(file);
     fclose(file);
     INSIST(byte_array != NULL, "malloc failed\n");
     
