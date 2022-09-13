@@ -21,8 +21,8 @@
     } void require_semicolon_()
 
 size_t get_file_size(FILE* file);
-uint8_t* file_to_array(FILE* file, size_t size);
-char* file_to_string(FILE* file, size_t size);
+uint8_t* file_to_array(FILE* file);
+char* file_to_string(FILE* file);
 
 #ifdef HELPER_IMPLEMENTATION
 
@@ -36,8 +36,9 @@ size_t get_file_size(FILE* file)
     return file_size;
 }
 
-uint8_t* file_to_array(FILE* file, size_t size)
+uint8_t* file_to_array(FILE* file)
 {
+    size_t size = get_file_size(file);
     uint8_t* byte_array = malloc(size);
     if (byte_array == NULL) return NULL;
     
@@ -49,9 +50,10 @@ uint8_t* file_to_array(FILE* file, size_t size)
     return byte_array;
 }
 
-char* file_to_string(FILE* file, size_t size)
+char* file_to_string(FILE* file)
 {
-    uint8_t* byte_array = file_to_array(file, size);
+    int size = get_file_size(file);
+    uint8_t* byte_array = file_to_array(file);
     if (byte_array == NULL) return NULL;
     
     byte_array[size - 1] = 0;
