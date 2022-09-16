@@ -2,7 +2,7 @@
 #define INSTRUCTION_H
 
 #include <stdint.h>
-#include "vm/general.h"
+#include "general.h"
 
 typedef enum Opcode
 {
